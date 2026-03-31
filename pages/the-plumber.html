@@ -92,16 +92,6 @@ Licence URI: http://www.os-templates.com/template-terms
         align-items: center;
       }
 
-      .image-container {
-        flex: 3; /* Adjust the value to change the width ratio of the image */
-      }
-
-      .image-container img {
-        width: 500px; /* Adjust width as needed */
-        height: 700px; /* Maintain aspect ratio */
-        margin-left: 100px;
-      }
-
       .description {
         flex: 3; /* Adjust the value to change the width ratio of the description */
         padding-left: 20px; /* Add padding to separate the image and description */
@@ -110,6 +100,120 @@ Licence URI: http://www.os-templates.com/template-terms
         align-items: flex-start; /* Align the child elements to the start (top) */
         margin-right: 50px;
         color: rgb(214, 214, 214);
+      }
+
+      .image-container {
+        flex: 3;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        display: block;
+        width: 500px;
+        height: 700px;
+        margin-left: 100px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 100px; /* Match the image margin-left */
+        width: 500px; /* Match the image width */
+        height: 700px; /* Match the image height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.3);
+        transition: background 0.3s ease;
+        cursor: pointer;
+      }
+
+      .play-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+      }
+
+      .play-button:hover {
+        transform: scale(1.1);
+      }
+      /* on hover of play button, video overlay darken*/
+      .play-button:hover + .video-overlay {
+        background: rgba(0, 0, 0, 0.5);
+      }
+      /* Fullscreen Video Player */
+      .fullscreen-video-player {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .fullscreen-video-player.active {
+        display: flex;
+      }
+
+      .fullscreen-video-player video {
+        width: 90%;
+        max-width: 1200px;
+        max-height: 90vh;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      .fullscreen-video-player iframe {
+        width: 90%;
+        max-width: 1200px;
+        height: 80vh;
+        border: none;
+        border-radius: 8px;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 48px;
+        cursor: pointer;
+        z-index: 10000;
+        transition:
+          transform 0.2s ease,
+          opacity 0.2s ease;
+        opacity: 0.7;
+        line-height: 1;
+      }
+
+      .close-button:hover {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     </style>
   </head>
@@ -157,45 +261,64 @@ Licence URI: http://www.os-templates.com/template-terms
 
     <div class="pad"></div>
     <div class="container">
-      <div class="image-container">
+      <div class="image-container" onclick="openVideoPlayer()">
         <img
-          src="../images/graphics/DevOps Graphics Package/Vertical Posters/Sabre - A Fencer_s Story.jpg"
+          src="https://placehold.co/900x500/000080/ffffff?text=The+Plumber+Img"
           alt="Image Description"
         />
+        <!-- Video overlay with play button -->
+        <div class="video-overlay">
+          <button class="play-button" aria-label="Play video">
+            <svg viewBox="0 0 64 64" width="64" height="64" fill="white">
+              <circle cx="32" cy="32" r="32" fill="rgba(0, 0, 0, 0.5)" />
+              <polygon points="26,20 26,44 46,32" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Fullscreen Video Player -->
+      <div class="fullscreen-video-player" id="fullscreenPlayer">
+        <button
+          class="close-button"
+          onclick="closeVideoPlayer()"
+          aria-label="Close video"
+        >
+          &times;
+        </button>
+        <iframe
+          id="fullscreenVideo"
+          src=""
+          allow="autoplay"
+          allowfullscreen
+        ></iframe>
       </div>
       <div class="description">
-        <h1 style="font-size: 36px">SABRE: A Fencer's Story</h1>
+        <h1 style="font-size: 36px">THE PLUMBER</h1>
         <p style="line-height: 0.1">
-          <strong>Written, Directed, and Edited By:</strong> William Julien
+          <strong>Written, Directed, and Edited By:</strong> Your Name
         </p>
         <p style="font-size: 20px" , style="line-height: 0.1">
-          An Olympic hopeful pursues his dream of fencing at the Olympics but
-          must first confront his coach’s harsh instructions.
+          Description: A brief description of the project goes here. This can
+          include the plot, themes, or any other relevant information about the
+          film.
         </p>
         <div class="pad3"></div>
         <div class="pad3"></div>
         <p style="line-height: 0.1">
-          <strong>Starring:</strong> Andrew Mackiewicz, Adrian Pasdar, Stephen
-          Kim, Isabela Carvalho
+          <strong>Assistant Director:</strong> Your Name
         </p>
         <p style="line-height: 0.1">
-          <strong>Assistant Director:</strong> Rahum Brown
+          <strong>Director of Photography, Colorist:</strong> Your Name
         </p>
         <p style="line-height: 0.1">
-          <strong>Director of Photography:</strong> William Julien
+          <strong>1st Assistant Camera:</strong> Your Name
         </p>
+        <p style="line-height: 0.1"><strong>Sound:</strong> Your Name</p>
+        <p style="line-height: 0.1"><strong>Score:</strong> Your Name</p>
+        <p style="line-height: 0.1"><strong>Sound Mix:</strong> Your Name</p>
         <p style="line-height: 0.1">
-          <strong>1st Assistant Camera:</strong> Jordan West
-        </p>
-        <p style="line-height: 0.1">
-          <strong>2nd Assistant Camera:</strong> Andrew Cao
-        </p>
-        <p style="line-height: 0.1"><strong>Grip:</strong> John Kang</p>
-        <p style="line-height: 0.1">
-          <strong>Script Supervisor:</strong> Gabriel Carusetta
-        </p>
-        <p style="line-height: 0.1">
-          <strong>Sound Operator:</strong> Miguel De Rivero
+          <strong>Special Thanks:</strong> Your Name
         </p>
         <div class="pad3"></div>
         <div class="pad3"></div>
@@ -317,6 +440,40 @@ Licence URI: http://www.os-templates.com/template-terms
     <script src="../layout/scripts/jquery.min.js"></script>
     <script src="../layout/scripts/jquery.backtotop.js"></script>
     <script src="../layout/scripts/jquery.mobilemenu.js"></script>
-    <script></script>
+    <script>
+      function openVideoPlayer() {
+        const player = document.getElementById("fullscreenPlayer");
+        const video = document.getElementById("fullscreenVideo");
+
+        const fileID = "10V7EjJRCbtrbtX_XVGt4eNY65Rz3rZXT";
+        video.src = `https://drive.google.com/file/d/${fileID}/preview`;
+
+        player.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeVideoPlayer() {
+        const player = document.getElementById("fullscreenPlayer");
+        const video = document.getElementById("fullscreenVideo");
+
+        video.src = ""; // Stops the video
+        player.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeVideoPlayer();
+        }
+      });
+
+      document
+        .getElementById("fullscreenPlayer")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeVideoPlayer();
+          }
+        });
+    </script>
   </body>
 </html>
